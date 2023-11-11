@@ -1,11 +1,20 @@
-import ErrorHandler from "../utils/errorhandler.js";
+import { ErrorHandler } from "../utils/errorhandler.js";
 
-export default Error = (err,req,res,next) => {
+const errorMiddleware = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.message = err.message || "Internal Server Error";
 
+    // CastError OR MongoDB error(id in params)
+    if(err.name === "CastError"){
+        const message = `Resource not found. Invalid: ${err.path}`;
+        err = new ErrorHandler(message,400);
+    }
+
     res.status(err.statusCode).json({
+        statusCode: err.statusCode,
         success: false,
-        error: err,
+        message: err.message,
     });
 };
+
+export default errorMiddleware;

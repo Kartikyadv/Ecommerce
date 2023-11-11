@@ -6,17 +6,18 @@ import {
     deleteProduct,
     getProductDetail
  } from "../controllers/productController.js";
+import { 
+    isAuthenticatedUser,
+    authorizeRoles
+} from "../middleware/auth.js";
 
 const productRoute = express.Router();
 
-productRoute.get("/products", getAllProducts);
-productRoute.post("/product/new", createProduct);
-// productRoute.put("/product/:id", updateProduct);
-// productRoute.delete("/product/:id", deleteProduct);
-
+productRoute.get("/products", isAuthenticatedUser, authorizeRoles("admin"), getAllProducts);
+productRoute.post("/product/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct);
 productRoute.route("/product/:id")
-.put(updateProduct)
-.delete(deleteProduct)
+.put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
+.delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
 .get(getProductDetail);
 
 export default productRoute;
