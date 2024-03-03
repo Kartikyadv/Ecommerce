@@ -1,0 +1,22 @@
+STEP-1 : BASIC - TILL 1:02:36 
+
+1. Make server
+2. connect DB
+3. CRUD Api's for product
+
+STEP-2 : ERROR HANDLING - TILL 1:24:23
+
+1. ErrorHandle                  - that will be called in every Api accordingly like "product not found"
+2. CatchAsyncError              - that will be called for async f(x) to remove code repetition of TRY/CATCH
+3. unhandeled Promise Rejection - like .env m problem then shutdown server taki besti na ho
+4. uncaught Exception Error     - log(youtube) - then shutdown server taki besti na ho
+    3&4 k bina bhi server shutdown hoega bt on purpose ni hota so thats why
+5. MongoDB || cast Error        - like productId - "dafd" dedi uske lie 
+
+STEP-3 : SEARCH, FILTER, PAGINATION - TILL 1:52:19
+
+1. Create Api Feature class with methods SEARCH, FILTER, PAGINATION
+
+STEP-4 : USERMODEL  - TILL 1:24:23
+
+STEP-5 : REGISTER, LOGIN , AUTHENTICATION  - TILL 1:24:23
