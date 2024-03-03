@@ -115,3 +115,37 @@ export const getUserDetails = catchAsyncError(async (req,res,next) => {
         responseResolver(200,true,`got user detail`,user)
     );
 });
+
+// Update User Password
+export const updatePassword = catchAsyncError(async (req,res,next) => {
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+    if(!isPasswordMatched){
+        return next(new ErrorHandler("Old password is incorrect", 400));
+    }
+
+    if(req.body.newPassword != req.body.confirmPassword){
+        return next(new ErrorHandler("Password not matched", 400));
+    }
+    user.password = req.body.newPassword;
+    await user.save();
+
+    sendToken(user,200,res);
+});
+
+// Get User Detail
+export const updateProfile = catchAsyncError(async (req,res,next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    };
+
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+
+    res.send(responseResolver(200,true,"Profile updated"));
+});

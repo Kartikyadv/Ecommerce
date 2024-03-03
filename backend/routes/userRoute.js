@@ -5,7 +5,9 @@ import {
     loginUser,
     logoutUser,
     registerUser,
-    resetPassword
+    resetPassword,
+    updatePassword,
+    updateProfile
  } from "../controllers/userController.js";
 import { isAuthenticatedUser } from "../middleware/auth.js";
 
@@ -17,5 +19,7 @@ userRoute.get("/logout", logoutUser);
 userRoute.post("/password/forgot", forgotPassword);
 userRoute.put("/password/reset/:token", resetPassword);
 userRoute.get("/me", isAuthenticatedUser ,getUserDetails);
+userRoute.put("/password/update", isAuthenticatedUser , updatePassword);
+userRoute.put("/me/updateProfile", isAuthenticatedUser , updateProfile);
 
 export default userRoute;

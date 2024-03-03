@@ -14,7 +14,7 @@ import {
 const productRoute = express.Router();
 
 productRoute.get("/products", isAuthenticatedUser, authorizeRoles("admin"), getAllProducts);
-productRoute.post("/product/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct);
+productRoute.post("/admin/product/new", isAuthenticatedUser, authorizeRoles("admin"), createProduct);
 productRoute.route("/product/:id")
 .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
 .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
